@@ -9,3 +9,4 @@
 
 1. Can only use JavaScript and Alpine.js. If there are other JS libraries this project would use, the packages should be fetched from CDN or placed in `libs` directory.
 2. The only NPM package that can be used is SASS.
+3. Cannot use `Alpine.data()`.

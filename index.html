@@ -5,11 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Put your description here." />
     <title>Mock Eccomerce Two</title>
-    <script defer src="./libs/alpinejs-3.13.3/dist/cdn.min.js"></script>
   </head>
   <body>
     <article>
-      <h1 x-data="{ message: 'Hello World!'}" x-text="message"></h1>
+      <h1 x-data="Headline" x-text="message"></h1>
+      <div x-data="marsProductTable">
+        <input type="text" placeholder="Search" x-model="searchValue" />
+        <table>
+          <thead>
+            <th>SKU</th>
+            <th>Name</th>
+            <th>Packaging Component</th>
+            <th>Material Group</th>
+            <th>Martian Material Code</th>
+            <th>Waste Collection Guidelines</th>
+            <th>Graphic</th>
+          </thead>
+          <tbody>
+            <template x-for="(row, index) in filteredRows" :key="index">
+              <tr>
+                <td x-text="row.sku"></td>
+                <td x-text="row.product_name"></td>
+                <td x-text="row.packaging_component"></td>
+                <td x-text="row.material_group"></td>
+                <td x-text="row.martian_material_code"></td>
+                <td x-text="row.waste_collection_guidelines"></td>
+                <td x-text="row.associated_graphic_id"></td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
     </article>
   </body>
+  <script defer src="./libs/alpinejs-3.13.3/dist/cdn.min.js"></script>
+  <script>
+    const Headline = () => {
+      return {
+        message: "Mars Packaging Information",
+      };
+    };
+  </script>
+  <script>
+    (function () {
+      const packagingInfo = [
+        {
+          sku: 51021,
+          product_name: "Martian Glow Serum with Red Algae",
+          packaging_component: "CAPSULE",
+          material_group: "BIOMETAL",
+          martian_material_code: "BM 3",
+          waste_collection_guidelines: "Raccolta metalli biodegradabili",
+          associated_graphic_id: 1,
+        },
+        {
+          sku: 51034,
+          product_name: "Crater Repair Cream with Lunar Dust",
+          packaging_component: "TUBE",
+          material_group: "GLASSINE",
+          martian_material_code: "GS 2",
+          waste_collection_guidelines: "Raccolta vetri speciali",
+          associated_graphic_id: 2,
+        },
+        {
+          sku: 51045,
+          product_name: "Asteroid Exfoliant with Meteorite Particles",
+          packaging_component: "JAR",
+          material_group: "COMPOSITE",
+          martian_material_code: "CP 7",
+          waste_collection_guidelines: "Raccolta compositi avanzati",
+          associated_graphic_id: 3,
+        },
+        {
+          sku: 51058,
+          product_name: "Galactic Hydration Spray with Nebula Essence",
+          packaging_component: "ATOMIZER",
+          material_group: "SYNTHETIC",
+          martian_material_code: "SY 4",
+          waste_collection_guidelines: "Raccolta sintetici",
+          associated_graphic_id: 4,
+        },
+        {
+          sku: 51067,
+          product_name: "Orbiting Oxygen Moisturizer with Space O2",
+          packaging_component: "PUMP",
+          material_group: "THERMOPLASTIC",
+          martian_material_code: "TP 5",
+          waste_collection_guidelines: "Raccolta termoplastici",
+          associated_graphic_id: 5,
+        },
+      ];
+
+      const MarsProductTable = () => {
+        return {
+          searchValue: "",
+          rows: packagingInfo,
+          get filteredRows() {
+            return this.rows.filter((row) => {
+              const currentSearchTerm = this.searchValue.toLowerCase();
+
+              return (
+                (row.sku && String(row.sku).includes(currentSearchTerm)) ||
+                (row.product_name &&
+                  row.product_name.toLowerCase().includes(currentSearchTerm)) ||
+                (row.packaging_component &&
+                  row.packaging_component
+                    .toLowerCase()
+                    .includes(currentSearchTerm)) ||
+                (row.material_group &&
+                  row.material_group
+                    .toLowerCase()
+                    .includes(currentSearchTerm)) ||
+                (row.martian_material_code &&
+                  row.martian_material_code
+                    .toLowerCase()
+                    .includes(currentSearchTerm)) ||
+                (row.waste_collection_guidelines &&
+                  row.waste_collection_guidelines
+                    .toLowerCase()
+                    .includes(currentSearchTerm))
+              );
+            });
+          },
+        };
+      };
+
+      window.marsProductTable = MarsProductTable;
+    })();
+  </script>
 </html>
